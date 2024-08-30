@@ -4,35 +4,28 @@
 
 # Libraries
 from collections import Counter
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
-# Function to count the number of occurrences of words within a string, within each entry of a 2D list
-def count_words_per_entry(text):
-    # Get a set of unique words in the entire text array
-    unique_words = set(' '.join(text).split())
-
-    # Convert the set to a sorted list for consistent ordering
-    unique_words = sorted(unique_words)
-
-    # Prepare an outer list to hold the word counts for each entry
-    word_counts_per_entry = []
-
-    # Loop through each entry in the text array
-    for entry in text:
-        # Split the entry into individual words
-        words = entry.split()
-        
-        # Count the occurrences of each unique word in the entry
-        word_counts = [words.count(word) for word in unique_words]
-
-        # Append the word counts list to the outer list
-        word_counts_per_entry.append(word_counts)
-
-    return word_counts_per_entry
-# end count_words_per_entry()
+# Count num of words per entry of list of string
+def count_words_scikit(text):
+    # Initialize the CountVectorizer
+    vectorizer = CountVectorizer()
+    
+    # Fit the model and transform the text into a word count matrix
+    word_count_matrix = vectorizer.fit_transform(text)
+    
+    # Convert the matrix to a dense format (list of lists) and get the feature names
+    word_counts = word_count_matrix.toarray()
+    # unique_words = vectorizer.get_feature_names_out() # list of unique words for visualization
+    
+    return word_counts
+# end count_words_scikit()
 
 # Input example: to be analyzed
 text = ["London Paris London", "Paris Paris London"]
 
 # Save list
-word_count = count_words_per_entry(text)
+word_count = count_words_scikit(text)
 print(word_count)
+
