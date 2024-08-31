@@ -5,7 +5,7 @@
 # Libraries
 from collections import Counter
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
 
 # Count num of words per entry of list of string
 def count_words_scikit(text):
@@ -21,16 +21,17 @@ def count_words_scikit(text):
 
     # Save cosine similarity before returning
     cos_sim = cosine_similarity(word_count_matrix)
+    euc_dist = euclidean_distances(word_count_matrix)
     
-    return word_counts, cos_sim
+    return word_counts, cos_sim, euc_dist
 # end count_words_scikit()
 
 # Input example: to be analyzed
 text = ["London Paris London", "Paris Paris London"]
 
 # Save list
-word_count, cos_sim = count_words_scikit(text)
-print(f"\n {word_count} \n\n {cos_sim} \n")
+word_count, cos_sim, euc_dis = count_words_scikit(text)
+print(f"\n {word_count} \n\n {cos_sim} \n\n {euc_dis} \n")
 
 
 
